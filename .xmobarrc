@@ -1,0 +1,15 @@
+Config { font = "-*-terminus-*-*-*-*-12-*-*-*-*-*-*-u"
+       , bgColor = "#000000"
+       , fgColor = "#AFAF87"
+       , position = Top 
+       , commands = [ Run Network "eth0" ["-L","0","-H","32","--normal","#429942","--high","#A36666"] 10
+                    , Run Cpu ["-L","3","-H","50","--normal","#429942","--high","#A36666"] 10
+                    , Run Memory ["-t","Mem: <usedratio>%"] 10
+    		        , Run Date "%a %b %_d %Y %H:%M:%S" "date" 10
+                    , Run CoreTemp ["-t", "Temp: <core0>C : <core1>C : <core2>C : <core3>C"] 10
+                    , Run StdinReader
+                    ]
+       , sepChar = "%"
+       , alignSep = "}{"
+       , template = " %StdinReader% }{ %coretemp% | %cpu% | %memory% | %eth0% | %date%"
+       }

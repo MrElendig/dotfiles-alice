@@ -1,0 +1,80 @@
+!------------------!
+!       XFT        !
+!------------------!
+
+Xft*dpi: 99
+Xft*antialias: true
+Xft*hinting: true
+Xft*hintstyle: hintfull
+Xft*rgba: rgb
+
+!------------------!
+!   URvxt Stuff    !
+!------------------!
+
+!--[term name]--!
+URxvt*termName: rxvt-256color
+!URxvt*termName: rxvt-unicode
+
+!--[trans and fg/bg]--!
+URxvt*fadeColor: black
+URxvt*transparent: false
+URxvt*shading: 80
+URxvt*depth:24
+URxvt*background: #000000
+URxvt*foreground: #C7C7C7
+URxvt*borderless: 1
+
+!--[font]--! 
+URxvt*font: -*-terminus-*-*-*-*-12-*-*-*-*-*-*-u
+!URxvt*boldFont: -*-terminus-bold-*-*-*-12-*-*-*-*-*-*-u
+!URxvt*font:			xft:DejaVu Sans Mono:pixelsize=8:autohint=true
+!URxvt*boldFont:			xft:DejaVu Sans Mono:pixelsize=8:bold:autohint=true
+!URxvt*italicFont:		xft:DejaVu Sans Mono:pixelsize=8:italic:autohint=true
+!URxvt*boldItalicFont:		xft:DejaVu Sans Mono:pixelsize=8:bold:italic:autohint=true
+
+!--[scrolling]--! 
+URxvt*scrollBar: false
+URxvt*saveLines: 10000
+
+!--[tabs]--! 
+!URxvt*perl-ext-common: default,tabbed
+
+!--[cursor]--!
+URxvt*cursorBlink: true
+
+!--[Colours]--! 
+URxvt*cursorColor: #FFAF00
+
+! black
+URxvt*color0:  #000000
+URxvt*color8:  #9999AA
+
+! red
+URxvt*color1:  #DE1923
+URxvt*color9:  #FF6050
+
+! green
+URxvt*color2:  #559933
+URxvt*color10: #66D077
+
+! yellow
+URxvt*color3:  #FF9922
+URxvt*color11: #FFFFAF
+
+! blue
+URxvt*color4:  #3579A8
+URxvt*color12: #4EB4FA
+
+! magenta
+URxvt*color5:  #BB88DD
+URxvt*color13: #D7AFD7
+
+! cyan
+URxvt*color6:  #00BBDD
+URxvt*color14: #0DEBFF
+
+! white
+URxvt*color7:  #C7C7C7
+URxvt*color15: #D9D9D9
+
