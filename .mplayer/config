@@ -1,0 +1,11 @@
+# Write your default config options here!
+ass=yes
+vo=xv
+ao=alsa
+subfont-text-scale=3.2
+double=yes
+monitoraspect=16:10
+spuaa=4
+subfont-osd-scale=4.4
+subpos=98
+embeddedfonts=yes
