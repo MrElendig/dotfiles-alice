@@ -1,0 +1,22 @@
+# Volume
+"vmix +2"
+  m:0x0 + c:176
+
+"vmix -2"
+  m:0x0 + c:174
+
+"vmix toggle"
+  m:0x0 + c:160
+
+# Player
+"mocp -r"
+  m:0x0 + c:144
+
+"mocp -f"
+  m:0x0 + c:153
+
+"mocp -G"
+  m:0x0 + c:162
+
+"mocp -s"
+  m:0x0 + c:164

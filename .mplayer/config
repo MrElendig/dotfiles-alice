@@ -1,7 +1,7 @@
 # Write your default config options here!
 ass=yes
 vo=xv
-ao=alsa
+ao=oss
 subfont-text-scale=2.8
 double=yes
 monitoraspect=16:10
