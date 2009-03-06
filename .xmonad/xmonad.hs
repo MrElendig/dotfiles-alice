@@ -54,11 +54,13 @@ layoutHook' = customLayout
 -- Looks --
 -- bar
 customPP :: PP
-customPP = defaultPP { ppCurrent = xmobarColor "#AFAF87" "" . wrap "<" ">"
-                     , ppTitle =  shorten 80
-                     , ppSep =  "<fc=#AFAF87> | </fc>"
-                     , ppHiddenNoWindows = xmobarColor "#AFAF87" ""
+customPP = defaultPP { ppCurrent = xmobarColor "#429942" "" . wrap "<" ">"
+		     , ppHidden = xmobarColor "#C98F0A" ""
+                     , ppHiddenNoWindows = xmobarColor "#C9A34E" ""
                      , ppUrgent = xmobarColor "#FFFFAF" "" . wrap "[" "]"
+		     , ppLayout = xmobarColor "#C9A34E" ""
+                     , ppTitle =  xmobarColor "#C9A34E" "" . shorten 80
+                     , ppSep =  "<fc=#429942> | </fc>"
                      }
 
 -- borders
