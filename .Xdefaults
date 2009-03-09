@@ -48,23 +48,23 @@ URxvt*cursorColor: #FFAF00
 
 ! black
 URxvt*color0:  #000000
-URxvt*color8:  #9999AA
+URxvt*color8:  #999999
 
 ! red
-URxvt*color1:  #DE1923
-URxvt*color9:  #FF6050
+URxvt*color1:  #BD484A
+URxvt*color9:  #F55D60
 
 ! green
-URxvt*color2:  #559933
-URxvt*color10: #66D077
+URxvt*color2:  #66994E
+URxvt*color10: #93DB6F
 
 ! yellow
-URxvt*color3:  #FF9922
-URxvt*color11: #FFFFAF
+URxvt*color3:  #C4A043
+URxvt*color11: #F0C452
 
 ! blue
-URxvt*color4:  #3579A8
-URxvt*color12: #4EB4FA
+URxvt*color4:  #567B94
+URxvt*color12: #7CB2D6
 
 ! magenta
 URxvt*color5:  #BB88DD
