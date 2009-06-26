@@ -2,6 +2,7 @@
 " general
 set nocompatible
 set nowrap
+syntax on
 
 " search
 set nohls
