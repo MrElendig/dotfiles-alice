@@ -1,5 +1,6 @@
 # Write your default config options here!
 ass=yes
+lavdopts=threads=4
 vo=xv
 ao=oss
 subfont-text-scale=2.8
