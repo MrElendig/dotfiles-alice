@@ -134,16 +134,6 @@ keys' conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     , ((modMask .|. shiftMask, xK_h     ), sendMessage MirrorShrink)
     , ((modMask .|. shiftMask, xK_l     ), sendMessage MirrorExpand)
 
-    -- mpd controls
-    , ((modMask .|. controlMask,  xK_h     ), spawn "mpc prev")
-    , ((modMask .|. controlMask,  xK_t     ), spawn "mpc pause")
-    , ((modMask .|. controlMask,  xK_n     ), spawn "mpc play")
-    , ((modMask .|. controlMask,  xK_s     ), spawn "mpc next")
-    , ((modMask .|. controlMask,  xK_g     ), spawn "mpc seek -2%")
-    , ((modMask .|. controlMask,  xK_c     ), spawn "mpc volume -4")
-    , ((modMask .|. controlMask,  xK_r     ), spawn "mpc volume +4")
-    , ((modMask .|. controlMask,  xK_l     ), spawn "mpc seek +2%")
-
     -- quit, or restart
     , ((modMask .|. shiftMask, xK_q     ), io (exitWith ExitSuccess))
     , ((modMask              , xK_q     ), restart "xmonad" True)
