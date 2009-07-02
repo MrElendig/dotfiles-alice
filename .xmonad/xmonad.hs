@@ -22,6 +22,7 @@ import XMonad.Hooks.DynamicLog
 -- layouts
 import XMonad.Layout.NoBorders
 import XMonad.Layout.ResizableTile
+import XMonad.Layout.Named
 
 -------------------------------------------------------------------------------
 -- Main --
@@ -76,7 +77,7 @@ workspaces' :: [WorkspaceId]
 workspaces' = ["1-main", "2-web", "3-mail", "4-torrents", "5-im", "6", "7", "8", "9"]
 
 -- layouts
-customLayout = avoidStruts $ smartBorders tiled ||| smartBorders (Mirror tiled)  ||| noBorders Full
+customLayout = avoidStruts $ named "[]=" (smartBorders tiled) ||| named "M[]=" (smartBorders (Mirror tiled))  ||| named "[]" (noBorders Full)
   where
     tiled = ResizableTall 1 (2/100) (1/2) []
 
