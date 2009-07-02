@@ -42,9 +42,17 @@ main = do
               }
 
 -------------------------------------------------------------------------------
+-- Functions --
+-- avoidMaster:  Avoid the master window, but otherwise manage new windows normally
+avoidMaster :: W.StackSet i l a s sd -> W.StackSet i l a s sd
+avoidMaster = W.modify' $ \c -> case c of
+    W.Stack t [] (r:rs) -> W.Stack t [r] rs
+    otherwise           -> c
+
+-------------------------------------------------------------------------------
 -- Hooks --
 manageHook' :: ManageHook
-manageHook' = (doF W.swapDown) <+> manageHook defaultConfig <+> manageDocks
+manageHook' = (doF avoidMaster) <+> manageHook defaultConfig <+> manageDocks
 
 logHook' :: Handle ->  X ()
 logHook' h = dynamicLogWithPP $ customPP { ppOutput = hPutStrLn h }
