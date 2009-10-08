@@ -53,7 +53,13 @@ avoidMaster = W.modify' $ \c -> case c of
 -------------------------------------------------------------------------------
 -- Hooks --
 manageHook' :: ManageHook
-manageHook' = (doF avoidMaster) <+> manageHook defaultConfig <+> manageDocks
+manageHook' = (doF avoidMaster) <+> myHooks <+> manageDocks
+
+myHooks :: ManageHook
+myHooks = composeAll [ className =? "MPlayer"   --> doFloat
+                     , className =? "Gimp"      --> doFloat
+                     , className =? "Vlc"       --> doFloat
+                     ]
 
 logHook' :: Handle ->  X ()
 logHook' h = dynamicLogWithPP $ customPP { ppOutput = hPutStrLn h }
@@ -65,10 +71,10 @@ layoutHook' = customLayout
 -- bar
 customPP :: PP
 customPP = defaultPP { ppCurrent = xmobarColor "#429942" "" . wrap "<" ">"
-		     , ppHidden = xmobarColor "#C98F0A" ""
+                     , ppHidden = xmobarColor "#C98F0A" ""
                      , ppHiddenNoWindows = xmobarColor "#C9A34E" ""
                      , ppUrgent = xmobarColor "#FFFFAF" "" . wrap "[" "]"
-		     , ppLayout = xmobarColor "#C9A34E" ""
+                     , ppLayout = xmobarColor "#C9A34E" ""
                      , ppTitle =  xmobarColor "#C9A34E" "" . shorten 80
                      , ppSep =  "<fc=#429942> | </fc>"
                      }
@@ -83,11 +89,11 @@ focusedBorderColor' = "#AFAF87"
 
 -- tabs
 tabTheme1 = defaultTheme { decoHeight = 16
-                         , activeColor = "#a6c292"
-                         , activeBorderColor = "#a6c292"
-                         , activeTextColor = "#000000"
-                         , inactiveBorderColor = "#000000"
-                         }
+                         , activeColor = "#a6c292"
+                         , activeBorderColor = "#a6c292"
+                         , activeTextColor = "#000000"
+                         , inactiveBorderColor = "#000000"
+                         }
 
 -- workspaces
 workspaces' :: [WorkspaceId]
