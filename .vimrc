@@ -3,6 +3,7 @@
 set nocompatible
 set nowrap
 syntax on
+filetype plugin indent on
 
 " search
 set nohls
