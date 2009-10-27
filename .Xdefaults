@@ -14,7 +14,6 @@ Xft*rgba: rgb
 
 !--[term name]--!
 URxvt*termName: rxvt-256color
-!URxvt*termName: rxvt-unicode
 
 !--[trans and fg/bg]--!
 URxvt*fadeColor: black
@@ -27,21 +26,19 @@ URxvt*borderless: 1
 
 !--[font]--! 
 URxvt*font: -*-terminus-*-*-*-*-12-*-*-*-*-*-*-u
-!URxvt*boldFont: -*-terminus-bold-*-*-*-12-*-*-*-*-*-*-u
-!URxvt*font:			xft:DejaVu Sans Mono:pixelsize=8:autohint=true
-!URxvt*boldFont:			xft:DejaVu Sans Mono:pixelsize=8:bold:autohint=true
-!URxvt*italicFont:		xft:DejaVu Sans Mono:pixelsize=8:italic:autohint=true
-!URxvt*boldItalicFont:		xft:DejaVu Sans Mono:pixelsize=8:bold:italic:autohint=true
 
 !--[scrolling]--! 
 URxvt*scrollBar: false
 URxvt*saveLines: 10000
 
-!--[tabs]--! 
-!URxvt*perl-ext-common: default,tabbed
+!--[perl]--! 
+URxvt*perl-ext-common: default
+
+!--[bell]--!
+URxvt*urgentOnBell: true
 
 !--[cursor]--!
-URxvt*cursorBlink: true
+URxvt*cursorBlink: false
 
 !--[Colours]--! 
 URxvt*cursorColor: #FFAF00
