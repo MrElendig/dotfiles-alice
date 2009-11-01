@@ -18,6 +18,8 @@ import XMonad.Util.Run (spawnPipe)
 -- hooks
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.DynamicLog
+import XMonad.Hooks.ManageHelpers
+import XMonad.Hooks.UrgencyHook
 
 -- layouts
 import XMonad.Layout.NoBorders
@@ -29,7 +31,8 @@ import XMonad.Layout.Tabbed
 -- Main --
 main = do
        h <- spawnPipe "xmobar"
-       xmonad $ defaultConfig 
+       xmonad $ withUrgencyHook NoUrgencyHook
+              $ defaultConfig 
               { workspaces = workspaces'
               , modMask = modMask'
               , borderWidth = borderWidth'
@@ -53,13 +56,13 @@ avoidMaster = W.modify' $ \c -> case c of
 -------------------------------------------------------------------------------
 -- Hooks --
 manageHook' :: ManageHook
-manageHook' = (doF avoidMaster) <+> myHooks <+> manageDocks
-
-myHooks :: ManageHook
-myHooks = composeAll [ className =? "MPlayer"   --> doFloat
-                     , className =? "Gimp"      --> doFloat
-                     , className =? "Vlc"       --> doFloat
-                     ]
+manageHook' = composeAll [ doF avoidMaster
+			 , composeOne [ isFullscreen -?> doFullFloat ]
+                         , className =? "MPlayer"   --> doFloat
+                         , className =? "Gimp"      --> doFloat
+                         , className =? "Vlc"       --> doFloat
+			 , manageDocks 
+			 ]
 
 logHook' :: Handle ->  X ()
 logHook' h = dynamicLogWithPP $ customPP { ppOutput = hPutStrLn h }
@@ -76,7 +79,7 @@ customPP = defaultPP { ppCurrent = xmobarColor "#429942" "" . wrap "<" ">"
                      , ppUrgent = xmobarColor "#FFFFAF" "" . wrap "[" "]"
                      , ppLayout = xmobarColor "#C9A34E" ""
                      , ppTitle =  xmobarColor "#C9A34E" "" . shorten 80
-                     , ppSep =  "<fc=#429942> | </fc>"
+                     , ppSep = xmobarColor "#429942" "" " | "
                      }
 
 -- borders
@@ -175,3 +178,4 @@ keys' conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
         , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
 
 -------------------------------------------------------------------------------
+
