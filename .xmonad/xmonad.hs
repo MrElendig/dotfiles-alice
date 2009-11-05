@@ -57,7 +57,7 @@ avoidMaster = W.modify' $ \c -> case c of
 -- Hooks --
 manageHook' :: ManageHook
 manageHook' = composeAll [ doF avoidMaster
-			 , composeOne [ isFullscreen -?> doFullFloat ]
+			 , isFullscreen             --> doFullFloat
                          , className =? "MPlayer"   --> doFloat
                          , className =? "Gimp"      --> doFloat
                          , className =? "Vlc"       --> doFloat
@@ -91,6 +91,7 @@ normalBorderColor'  = "#333333"
 focusedBorderColor' = "#AFAF87"
 
 -- tabs
+tabTheme1 :: Theme
 tabTheme1 = defaultTheme { decoHeight = 16
                          , activeColor = "#a6c292"
                          , activeBorderColor = "#a6c292"
@@ -103,9 +104,14 @@ workspaces' :: [WorkspaceId]
 workspaces' = ["1-main", "2-web", "3-mail", "4-torrents", "5-im", "6", "7", "8", "9"]
 
 -- layouts
-customLayout = avoidStruts $ named "[]=" (smartBorders tiled) ||| named "M[]=" (smartBorders (Mirror tiled))  ||| named "[]" (noBorders Full) ||| named "T" ( tabbed shrinkText tabTheme1 ) 
+customLayout = avoidStruts $ tile ||| mtile ||| tab ||| full
   where
-    tiled = ResizableTall 1 (2/100) (1/2) []
+    rt = ResizableTall 1 (2/100) (1/2) []
+    tile = named "[]=" $ smartBorders rt
+    mtile = named "M[]=" $ smartBorders $ Mirror rt
+    tab = named "T" $ noBorders $ tabbed shrinkText tabTheme1
+    full = named "[]" $ noBorders Full 
+
 
 -------------------------------------------------------------------------------
 -- Terminal --
