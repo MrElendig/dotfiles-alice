@@ -1,7 +1,6 @@
-{- xmonad.hs
- - Author: Øyvind 'Mr.Elendig' Heggstad <mrelendig AT har-ikkje DOT net>
- -}
-
+-------------------------------------------------------------------------------
+-- xmonad.hs for xmonad-darcs
+-- Author: Øyvind 'Mr.Elendig' Heggstad <mrelendig AT har-ikkje DOT net>
 -------------------------------------------------------------------------------
 -- Imports --
 -- stuff
@@ -9,14 +8,11 @@ import XMonad
 import qualified XMonad.StackSet as W
 import qualified Data.Map as M
 import System.Exit
-import Graphics.X11.Xlib
-import IO (Handle, hPutStrLn) 
 
 -- utils
 import XMonad.Util.Run (spawnPipe)
 
 -- hooks
-import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.UrgencyHook
@@ -29,21 +25,27 @@ import XMonad.Layout.Tabbed
 
 -------------------------------------------------------------------------------
 -- Main --
-main = do
-       h <- spawnPipe "xmobar"
-       xmonad $ withUrgencyHook NoUrgencyHook
-              $ defaultConfig 
-              { workspaces = workspaces'
-              , modMask = modMask'
-              , borderWidth = borderWidth'
-              , normalBorderColor = normalBorderColor'
-              , focusedBorderColor = focusedBorderColor'
-              , terminal = terminal'
-              , keys = keys'
-              , logHook = logHook' h 
-              , layoutHook = layoutHook'
-              , manageHook = manageHook'
-              }
+main :: IO ()
+main = xmonad =<< statusBar cmd pp kb conf
+  where 
+    uhook = withUrgencyHookC NoUrgencyHook urgentConfig
+    cmd = "xmobar"
+    pp = customPP
+    kb = toggleStrutsKey
+    conf = uhook $ myConfig
+
+-------------------------------------------------------------------------------
+-- Configs --
+myConfig = defaultConfig { workspaces = workspaces'
+                         , modMask = modMask'
+                         , borderWidth = borderWidth'
+                         , normalBorderColor = normalBorderColor'
+                         , focusedBorderColor = focusedBorderColor'
+                         , terminal = terminal'
+                         , keys = keys'
+                         , layoutHook = layoutHook'
+                         , manageHook = manageHook'
+                         }
 
 -------------------------------------------------------------------------------
 -- Functions --
@@ -61,11 +63,7 @@ manageHook' = composeAll [ doF avoidMaster
                          , className =? "MPlayer"   --> doFloat
                          , className =? "Gimp"      --> doFloat
                          , className =? "Vlc"       --> doFloat
-			 , manageDocks 
 			 ]
-
-logHook' :: Handle ->  X ()
-logHook' h = dynamicLogWithPP $ customPP { ppOutput = hPutStrLn h }
 
 layoutHook' = customLayout
 
@@ -76,11 +74,14 @@ customPP :: PP
 customPP = defaultPP { ppCurrent = xmobarColor "#429942" "" . wrap "<" ">"
                      , ppHidden = xmobarColor "#C98F0A" ""
                      , ppHiddenNoWindows = xmobarColor "#C9A34E" ""
-                     , ppUrgent = xmobarColor "#FFFFAF" "" . wrap "[" "]"
+                     , ppUrgent = xmobarColor "#FFFFAF" "" . wrap "[" "]" . xmobarStrip
                      , ppLayout = xmobarColor "#C9A34E" ""
                      , ppTitle =  xmobarColor "#C9A34E" "" . shorten 80
                      , ppSep = xmobarColor "#429942" "" " | "
                      }
+
+urgentConfig :: UrgencyConfig
+urgentConfig = UrgencyConfig { suppressWhen = Focused, remindWhen = Dont }
 
 -- borders
 borderWidth' :: Dimension
@@ -104,14 +105,13 @@ workspaces' :: [WorkspaceId]
 workspaces' = ["1-main", "2-web", "3-mail", "4-torrents", "5-im", "6", "7", "8", "9"]
 
 -- layouts
-customLayout = avoidStruts $ tile ||| mtile ||| tab ||| full
+customLayout = tile ||| mtile ||| tab ||| full
   where
     rt = ResizableTall 1 (2/100) (1/2) []
     tile = named "[]=" $ smartBorders rt
     mtile = named "M[]=" $ smartBorders $ Mirror rt
     tab = named "T" $ noBorders $ tabbed shrinkText tabTheme1
     full = named "[]" $ noBorders Full 
-
 
 -------------------------------------------------------------------------------
 -- Terminal --
@@ -125,6 +125,9 @@ modMask' :: KeyMask
 modMask' = mod4Mask
 
 -- keys
+toggleStrutsKey :: XConfig Layout -> (KeyMask, KeySym)
+toggleStrutsKey XConfig {XMonad.modMask = modMask} = (modMask, xK_b)
+
 keys' :: XConfig Layout -> M.Map (KeyMask, KeySym) (X ())
 keys' conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     -- launching and killing programs
@@ -137,7 +140,6 @@ keys' conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     -- layouts
     , ((modMask,               xK_space ), sendMessage NextLayout)
     , ((modMask .|. shiftMask, xK_space ), setLayout $ XMonad.layoutHook conf)
-    , ((modMask,               xK_b     ), sendMessage ToggleStruts)
 
     -- floating layer stuff
     , ((modMask,               xK_t     ), withFocused $ windows . W.sink)
@@ -168,7 +170,7 @@ keys' conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 
     -- quit, or restart
     , ((modMask .|. shiftMask, xK_q     ), io (exitWith ExitSuccess))
-    , ((modMask              , xK_q     ), restart "xmonad" True)
+    , ((modMask              , xK_q     ), spawn "xmonad --recompile; xmonad --restart")
     ]
     ++
     -- mod-[1..9] %! Switch to workspace N
