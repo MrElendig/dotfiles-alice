@@ -10,7 +10,6 @@ import qualified Data.Map as M
 import System.Exit
 
 -- utils
-import XMonad.Util.Run (spawnPipe)
 
 -- hooks
 import XMonad.Hooks.DynamicLog
@@ -32,7 +31,7 @@ main = xmonad =<< statusBar cmd pp kb conf
     cmd = "xmobar"
     pp = customPP
     kb = toggleStrutsKey
-    conf = uhook $ myConfig
+    conf = uhook myConfig
 
 -------------------------------------------------------------------------------
 -- Configs --
@@ -48,7 +47,7 @@ myConfig = defaultConfig { workspaces = workspaces'
                          }
 
 -------------------------------------------------------------------------------
--- Functions --
+-- Helpers --
 -- avoidMaster:  Avoid the master window, but otherwise manage new windows normally
 avoidMaster :: W.StackSet i l a s sd -> W.StackSet i l a s sd
 avoidMaster = W.modify' $ \c -> case c of
@@ -56,43 +55,35 @@ avoidMaster = W.modify' $ \c -> case c of
     otherwise           -> c
 
 -------------------------------------------------------------------------------
--- Hooks --
-manageHook' :: ManageHook
-manageHook' = composeAll [ doF avoidMaster
+-- Window Management --
+manageHook' = composeAll [ doF avoidMaster -- replace with X.H.InsertPosition ?
 			 , isFullscreen             --> doFullFloat
                          , className =? "MPlayer"   --> doFloat
                          , className =? "Gimp"      --> doFloat
                          , className =? "Vlc"       --> doFloat
 			 ]
 
-layoutHook' = customLayout
-
 -------------------------------------------------------------------------------
 -- Looks --
 -- bar
-customPP :: PP
 customPP = defaultPP { ppCurrent = xmobarColor "#429942" "" . wrap "<" ">"
                      , ppHidden = xmobarColor "#C98F0A" ""
                      , ppHiddenNoWindows = xmobarColor "#C9A34E" ""
-                     , ppUrgent = xmobarColor "#FFFFAF" "" . wrap "[" "]" . xmobarStrip
+                     , ppUrgent = xmobarColor "#FFFFAF" "" . wrap "[" "]" 
                      , ppLayout = xmobarColor "#C9A34E" ""
                      , ppTitle =  xmobarColor "#C9A34E" "" . shorten 80
                      , ppSep = xmobarColor "#429942" "" " | "
                      }
 
-urgentConfig :: UrgencyConfig
+-- urgent notification
 urgentConfig = UrgencyConfig { suppressWhen = Focused, remindWhen = Dont }
 
 -- borders
-borderWidth' :: Dimension
 borderWidth' = 1
-
-normalBorderColor', focusedBorderColor' :: String
 normalBorderColor'  = "#333333"
 focusedBorderColor' = "#AFAF87"
 
 -- tabs
-tabTheme1 :: Theme
 tabTheme1 = defaultTheme { decoHeight = 16
                          , activeColor = "#a6c292"
                          , activeBorderColor = "#a6c292"
@@ -101,11 +92,10 @@ tabTheme1 = defaultTheme { decoHeight = 16
                          }
 
 -- workspaces
-workspaces' :: [WorkspaceId]
 workspaces' = ["1-main", "2-web", "3-mail", "4-torrents", "5-im", "6", "7", "8", "9"]
 
 -- layouts
-customLayout = tile ||| mtile ||| tab ||| full
+layoutHook' = tile ||| mtile ||| tab ||| full
   where
     rt = ResizableTall 1 (2/100) (1/2) []
     tile = named "[]=" $ smartBorders rt
@@ -115,13 +105,11 @@ customLayout = tile ||| mtile ||| tab ||| full
 
 -------------------------------------------------------------------------------
 -- Terminal --
-terminal' :: String
 terminal' = "urxvt"
 
 -------------------------------------------------------------------------------
 -- Keys/Button bindings --
 -- modmask
-modMask' :: KeyMask
 modMask' = mod4Mask
 
 -- keys
@@ -134,8 +122,8 @@ keys' conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     [ ((modMask,               xK_Return), spawn $ XMonad.terminal conf) 
     , ((modMask,               xK_p     ), spawn "dmenu_run") 
     , ((modMask .|. shiftMask, xK_p     ), spawn "gmrun")
-    , ((modMask .|. shiftMask, xK_c     ), kill)
     , ((modMask .|. shiftMask, xK_m     ), spawn "claws-mail")
+    , ((modMask .|. shiftMask, xK_c     ), kill)
 
     -- layouts
     , ((modMask,               xK_space ), sendMessage NextLayout)
