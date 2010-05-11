@@ -41,6 +41,13 @@ autocmd FileType mail,human set formatoptions+=t textwidth=72
 autocmd FileType python let python_highlight_all = 1
 autocmd FileType python let python_slow_sync = 1
 autocmd FileType python set expandtab shiftwidth=4 softtabstop=4 
+autocmd FileType python set completeopt=preview
+
+" PKGBUILD stuff
+autocmd FileType PKGBUILD set expandtab shiftwidth=2 softtabstop=4 
+
+" sh stuff
+autocmd FileType sh set expandtab shiftwidth=2 softtabstop=4 
 
 " LaTeX
 autocmd Filetype tex,latex set grepprg=grep\ -nH\ $
