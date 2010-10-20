@@ -9,12 +9,14 @@ import qualified XMonad.StackSet as W
 import qualified Data.Map as M
 import System.Exit
 
--- utils
+-- actions
+import XMonad.Actions.GridSelect
 
 -- hooks
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.UrgencyHook
+import XMonad.Hooks.InsertPosition
 
 -- layouts
 import XMonad.Layout.NoBorders
@@ -28,7 +30,7 @@ main :: IO ()
 main = xmonad =<< statusBar cmd pp kb conf
   where 
     uhook = withUrgencyHookC NoUrgencyHook urgentConfig
-    cmd = "xmobar"
+    cmd = "bash -c \"tee >(xmobar -x0) | xmobar -x1\""
     pp = customPP
     kb = toggleStrutsKey
     conf = uhook myConfig
@@ -47,21 +49,15 @@ myConfig = defaultConfig { workspaces = workspaces'
                          }
 
 -------------------------------------------------------------------------------
--- Helpers --
--- avoidMaster:  Avoid the master window, but otherwise manage new windows normally
-avoidMaster :: W.StackSet i l a s sd -> W.StackSet i l a s sd
-avoidMaster = W.modify' $ \c -> case c of
-    W.Stack t [] (r:rs) -> W.Stack t [r] rs
-    otherwise           -> c
-
--------------------------------------------------------------------------------
 -- Window Management --
-manageHook' = composeAll [ doF avoidMaster -- replace with X.H.InsertPosition ?
-			 , isFullscreen             --> doFullFloat
+manageHook' = composeAll [ isFullscreen             --> doFullFloat
                          , className =? "MPlayer"   --> doFloat
                          , className =? "Gimp"      --> doFloat
                          , className =? "Vlc"       --> doFloat
-			 ]
+			 , insertPosition Below Newer
+			 , transience'
+                         ]
+
 
 -------------------------------------------------------------------------------
 -- Looks --
@@ -124,6 +120,9 @@ keys' conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     , ((modMask .|. shiftMask, xK_p     ), spawn "gmrun")
     , ((modMask .|. shiftMask, xK_m     ), spawn "claws-mail")
     , ((modMask .|. shiftMask, xK_c     ), kill)
+
+    -- grid
+    , ((modMask,               xK_g     ), goToSelected defaultGSConfig)
 
     -- layouts
     , ((modMask,               xK_space ), sendMessage NextLayout)
