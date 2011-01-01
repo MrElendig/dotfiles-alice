@@ -2,6 +2,9 @@
 -- xmonad.hs for xmonad-darcs
 -- Author: Øyvind 'Mr.Elendig' Heggstad <mrelendig AT har-ikkje DOT net>
 -------------------------------------------------------------------------------
+-- Compiler flags --
+{-# LANGUAGE NoMonomorphismRestriction #-}
+
 -- Imports --
 -- stuff
 import XMonad
@@ -70,6 +73,8 @@ customPP = defaultPP { ppCurrent = xmobarColor "#429942" "" . wrap "<" ">"
                      , ppTitle =  xmobarColor "#C9A34E" "" . shorten 80
                      , ppSep = xmobarColor "#429942" "" " | "
                      }
+-- GridSelect
+myGSConfig = defaultGSConfig { gs_cellwidth = 160 }
 
 -- urgent notification
 urgentConfig = UrgencyConfig { suppressWhen = Focused, remindWhen = Dont }
@@ -122,7 +127,7 @@ keys' conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     , ((modMask .|. shiftMask, xK_c     ), kill)
 
     -- grid
-    , ((modMask,               xK_g     ), goToSelected defaultGSConfig)
+    , ((modMask,               xK_g     ), goToSelected myGSConfig)
 
     -- layouts
     , ((modMask,               xK_space ), sendMessage NextLayout)
