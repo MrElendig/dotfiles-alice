@@ -54,13 +54,13 @@ autocmd FileType sh set expandtab shiftwidth=2 softtabstop=4
 autocmd Filetype tex,latex set grepprg=grep\ -nH\ $
 autocmd Filetype tex,latex let g:tex_flavor = "latex"
 
+" Common Lisp
+autocmd FileType lisp let g:slimv_client='python /usr/share/vim/vimfiles/ftplugin/slimv.py -r "urxvt -T Slimv -e @p @s -l sbcl -s"'
 
 " -[ Mappings ]-"
-" taglist
-nnoremap <silent> <F8> :TlistToggle<CR>
-inoremap <silent> <F8> <esc>:TlistToggle<CR>a
-nnoremap <silent> <F9> :TlistUpdate<CR>
-inoremap <silent> <F9> <esc>:TlistUpdate<CR>a
+" Tagbar
+nnoremap <silent> <F8> :TagbarToggle<CR>
+inoremap <silent> <F8> <esc>:TagbarToggle<CR>a
 
 
 " -[ Plugins and Scripts ]-
