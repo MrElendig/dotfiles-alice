@@ -1,7 +1,10 @@
+[default]
 # Write your default config options here!
+#vo=xv
+#vo=vdpau,xv,
+vc=ffh264vdpau,ffodivxvdpau,ffmpeg12vdpau,
 ass=yes
 lavdopts=threads=4
-vo=xv
 ao=oss
 subfont-text-scale=2.8
 double=yes
