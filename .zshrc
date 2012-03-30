@@ -16,7 +16,7 @@ SAVEHIST=1000
 #------------------------------
 export EDITOR="vim"
 export PAGER="vimpager"
-export PATH="${PATH}:${HOME}/bin"
+export PATH="${PATH}:${HOME}/bin:${HOME}/.cabal/bin"
 
 #-----------------------------
 # Dircolors
