@@ -11,6 +11,7 @@ import XMonad
 import qualified XMonad.StackSet as W
 import qualified Data.Map as M
 import System.Exit
+import XMonad.Util.Run (safeSpawn)
 
 -- actions
 import XMonad.Actions.GridSelect
@@ -120,10 +121,10 @@ toggleStrutsKey XConfig {XMonad.modMask = modMask} = (modMask, xK_b)
 keys' :: XConfig Layout -> M.Map (KeyMask, KeySym) (X ())
 keys' conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     -- launching and killing programs
-    [ ((modMask,               xK_Return), spawn $ XMonad.terminal conf) 
-    , ((modMask,               xK_p     ), spawn "dmenu_run") 
-    , ((modMask .|. shiftMask, xK_p     ), spawn "gmrun")
-    , ((modMask .|. shiftMask, xK_m     ), spawn "claws-mail")
+    [ ((modMask,               xK_Return), safeSpawn (XMonad.terminal conf) []) 
+    , ((modMask,               xK_p     ), safeSpawn "dmenu_run" []) 
+    , ((modMask .|. shiftMask, xK_p     ), safeSpawn "gmrun" [])
+    , ((modMask .|. shiftMask, xK_m     ), safeSpawn "claws-mail" [])
     , ((modMask .|. shiftMask, xK_c     ), kill)
 
     -- grid
