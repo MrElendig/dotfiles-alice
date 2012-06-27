@@ -1,4 +1,11 @@
 !------------------!
+!     Cursor       !
+!------------------!
+
+Xcursor.theme: whiteglass
+Xcursor.size: 16
+
+!------------------!
 !       XFT        !
 !------------------!
 
@@ -13,7 +20,7 @@ Xft*rgba: rgb
 !------------------!
 
 !--[term name]--!
-URxvt*termName: rxvt-256color
+URxvt*termName: rxvt-unicode-256color
 
 !--[trans and fg/bg]--!
 URxvt*fadeColor: black
@@ -26,6 +33,7 @@ URxvt*borderless: 1
 
 !--[font]--! 
 URxvt*font: -*-terminus-*-*-*-*-12-*-*-*-*-*-*-u
+!URxvt*font: xft:Dejavu Sans Mono:size=9
 
 !--[scrolling]--! 
 URxvt*scrollBar: false
