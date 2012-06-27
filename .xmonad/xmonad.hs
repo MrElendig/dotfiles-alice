@@ -24,7 +24,7 @@ import XMonad.Hooks.InsertPosition
 -- layouts
 import XMonad.Layout.NoBorders
 import XMonad.Layout.ResizableTile
-import XMonad.Layout.Named
+import XMonad.Layout.Renamed
 import XMonad.Layout.Tabbed
 
 -------------------------------------------------------------------------------
@@ -99,10 +99,10 @@ workspaces' = ["1-main", "2-web", "3-mail", "4-torrents", "5-im", "6", "7", "8",
 layoutHook' = tile ||| mtile ||| tab ||| full
   where
     rt = ResizableTall 1 (2/100) (1/2) []
-    tile = named "[]=" $ smartBorders rt
-    mtile = named "M[]=" $ smartBorders $ Mirror rt
-    tab = named "T" $ noBorders $ tabbed shrinkText tabTheme1
-    full = named "[]" $ noBorders Full 
+    tile = renamed [Replace "[]="] $ smartBorders rt
+    mtile = renamed [Replace "M[]="] $ smartBorders $ Mirror rt
+    tab = renamed [Replace "T"] $ noBorders $ tabbed shrinkText tabTheme1
+    full = renamed [Replace "[]"] $ noBorders Full 
 
 -------------------------------------------------------------------------------
 -- Terminal --
