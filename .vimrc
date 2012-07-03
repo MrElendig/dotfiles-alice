@@ -1,3 +1,8 @@
+" -[ Runtime and Stuff(tm) ]-
+" pathogen for using ~/.vim/bundle
+runtime bundle/vim-pathogen/autoload/pathogen.vim
+call pathogen#infect()
+
 " -[ General behaviour ]-
 " general
 set nocompatible
