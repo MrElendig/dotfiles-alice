@@ -69,8 +69,3 @@ inoremap <silent> <F8> <esc>:TagbarToggle<CR>a
 
 
 " -[ Plugins and Scripts ]-
-" taglist
-let Tlist_Use_Right_Window = 1
-let Tlist_Compart_Format = 1
-let Tlist_Show_Menu = 1
-let Tlist_Exit_OnlyWindow = 1
