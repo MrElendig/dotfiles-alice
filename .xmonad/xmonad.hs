@@ -12,6 +12,7 @@ import qualified XMonad.StackSet as W
 import qualified Data.Map as M
 import System.Exit
 import XMonad.Util.Run (safeSpawn)
+import Graphics.X11.ExtraTypes.XF86
 
 -- actions
 import XMonad.Actions.GridSelect
@@ -126,6 +127,11 @@ keys' conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     , ((modMask .|. shiftMask, xK_p     ), safeSpawn "gmrun" [])
     , ((modMask .|. shiftMask, xK_m     ), safeSpawn "claws-mail" [])
     , ((modMask .|. shiftMask, xK_c     ), kill)
+
+    -- audio
+    , ((0, xF86XK_AudioRaiseVolume      ), safeSpawn "amixer" ["-q", "set", "Master", "1+"])
+    , ((0, xF86XK_AudioLowerVolume      ), safeSpawn "amixer" ["-q", "set", "Master", "1-"])
+    , ((0, xF86XK_AudioMute             ), safeSpawn "amixer" ["-q", "set", "Master", "toggle"])
 
     -- grid
     , ((modMask,               xK_g     ), goToSelected myGSConfig)
