@@ -128,10 +128,13 @@ keys' conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     , ((modMask .|. shiftMask, xK_m     ), safeSpawn "claws-mail" [])
     , ((modMask .|. shiftMask, xK_c     ), kill)
 
-    -- audio
+    -- multimedia
     , ((0, xF86XK_AudioRaiseVolume      ), safeSpawn "amixer" ["-q", "set", "Master", "1+"])
     , ((0, xF86XK_AudioLowerVolume      ), safeSpawn "amixer" ["-q", "set", "Master", "1-"])
     , ((0, xF86XK_AudioMute             ), safeSpawn "amixer" ["-q", "set", "Master", "toggle"])
+    , ((0, xF86XK_AudioPlay             ), safeSpawn "mocp" ["-G"])
+    , ((0, xF86KX_AudioNext             ), safeSpawn "mocp" ["-f"])
+    , ((0, xF86XK_AudioPrev             ), safeSpawn "mocp" ["-r"])
 
     -- grid
     , ((modMask,               xK_g     ), goToSelected myGSConfig)
