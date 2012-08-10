@@ -31,7 +31,7 @@ set number
 set colorcolumn=80
 
 " statusline
-set statusline=%<%f\ %y%h%m%r\ PWD:%{getcwd()}%=%-14.(%l,%c%V%)\ %P
+set statusline=%<%f\ %{fugitive#statusline()}\ %y%h%m%r\ PWD:%{getcwd()}%=%-14.(%l,%c%V%)\ %P
 set laststatus=2
 
 " colours
