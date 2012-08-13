@@ -58,7 +58,7 @@ alias ls="ls --color -F"
 alias ll="ls --color -lh"
 alias spm="sudo pacman"
 alias spmc="sudo pacman-color"
-
+alias gr="gvim --remote-silent"
 #------------------------------
 # Comp stuff
 #------------------------------
