@@ -57,6 +57,7 @@ myConfig = defaultConfig { workspaces = workspaces'
 -- Window Management --
 manageHook' = composeAll [ isFullscreen             --> doFullFloat
                          , className =? "MPlayer"   --> doFloat
+                         , className =? "mplayer2"  --> doFloat
                          , className =? "Gimp"      --> doFloat
                          , className =? "Vlc"       --> doFloat
 			 , insertPosition Below Newer
