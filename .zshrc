@@ -16,7 +16,7 @@ SAVEHIST=1000
 #------------------------------
 export BROWSER="firefox"
 export EDITOR="vim"
-export PAGER="vimpager"
+#export PAGER="vimpager"
 export PATH="${PATH}:${HOME}/bin:${HOME}/.cabal/bin"
 
 #-----------------------------
@@ -59,6 +59,7 @@ alias ll="ls --color -lh"
 alias spm="sudo pacman"
 alias spmc="sudo pacman-color"
 alias gr="gvim --remote-silent"
+alias vr="vim --remote-silent"
 #------------------------------
 # Comp stuff
 #------------------------------
@@ -91,7 +92,7 @@ case $TERM in
 		precmd () { print -Pn "\e]0;[%n@%M][%~]%#\a" } 
 		preexec () { print -Pn "\e]0;[%n@%M][%~]%# ($1)\a" }
 	;;
-    screen)
+    screen|screen-256color)
     	precmd () { 
 			print -Pn "\e]83;title \"$1\"\a" 
 			print -Pn "\e]0;$TERM - (%L) [%n@%M]%# [%~]\a" 
