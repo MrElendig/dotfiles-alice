@@ -130,9 +130,14 @@ keys' conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     , ((modMask .|. shiftMask, xK_c     ), kill)
 
     -- multimedia
+{-- Alsa mixer bindings
     , ((0, xF86XK_AudioRaiseVolume      ), safeSpawn "amixer" ["-q", "set", "Master", "1+"])
     , ((0, xF86XK_AudioLowerVolume      ), safeSpawn "amixer" ["-q", "set", "Master", "1-"])
     , ((0, xF86XK_AudioMute             ), safeSpawn "amixer" ["-q", "set", "Master", "toggle"])
+--}
+    , ((0, xF86XK_AudioRaiseVolume      ), safeSpawn "ponymix" ["increase", "5"])
+    , ((0, xF86XK_AudioLowerVolume      ), safeSpawn "ponymix" ["decrease", "5"])
+    , ((0, xF86XK_AudioMute             ), safeSpawn "ponymix" ["toggle"])
     , ((0, xF86XK_AudioPlay             ), safeSpawn "mocp" ["-G"])
     , ((0, xF86XK_AudioNext             ), safeSpawn "mocp" ["-f"])
     , ((0, xF86XK_AudioPrev             ), safeSpawn "mocp" ["-r"])
