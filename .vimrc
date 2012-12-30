@@ -1,3 +1,6 @@
+" -[ Fuck compatible mode ] -
+set nocompatible
+
 " -[ Runtime and Stuff(tm) ]-
 " pathogen for using ~/.vim/bundle
 runtime bundle/vim-pathogen/autoload/pathogen.vim
@@ -5,7 +8,6 @@ call pathogen#infect()
 
 " -[ General behaviour ]-
 " general
-set nocompatible
 set nowrap
 syntax on
 filetype plugin indent on
@@ -17,7 +19,6 @@ set showmatch
 
 " identing
 set autoindent
-set smartindent
 
 " command mode
 set wildmenu
@@ -67,5 +68,3 @@ autocmd FileType lisp let g:slimv_client='python /usr/share/vim/vimfiles/ftplugi
 nnoremap <silent> <F8> :TagbarToggle<CR>
 inoremap <silent> <F8> <esc>:TagbarToggle<CR>a
 
-
-" -[ Plugins and Scripts ]-
