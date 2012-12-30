@@ -84,6 +84,9 @@ zstyle ':completion:*:kill:*'   force-list always
 zstyle ':completion:*:*:killall:*' menu yes select
 zstyle ':completion:*:killall:*'   force-list always
 
+#- complete pacman-color the same as pacman
+compdef _pacman pacman-color=pacman
+
 #------------------------------
 # Window title
 #------------------------------
