@@ -14,7 +14,6 @@ scrollback_lines = 1000
 search_wrap = true
 #icon_name = terminal
 #geometry = 640x480
-#term = xterm-termite
 
 # 0.0: opaque, 1.0: transparent
 transparency = 0.0
@@ -27,7 +26,7 @@ cursor_blink = system
 cursor_shape = block
 
 # $BROWSER is used by default
-browser = firefox
+#browser = firefox
 
 # word characters used for word selection
 # (default if unset: all graphic non-punctuation/space characters)
@@ -39,6 +38,9 @@ foreground_bold = #ffffff
 #foreground_dim = #888888
 background = #000000
 cursor = #ffaf00
+
+# if unset, will reverse foreground and background
+highlight = #2f2f2f
 
 # colors from color0 to color254 can be set
 color0 = #000000
@@ -57,3 +59,14 @@ color12 = #7cb2d6
 color13 = #d7afd7
 color14 = #0debff
 color15 = #d9d9d9
+
+[hints]
+#font = Monospace 12
+#foreground = #dcdccc
+#background = #3f3f3f
+#padding = 2
+#border = #3f3f3f
+#border_width = 0.5
+#roundness = 2.0
+
+# vim: ft=dosini
