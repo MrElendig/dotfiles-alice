@@ -60,6 +60,23 @@ alias spm="sudo pacman"
 alias spmc="sudo pacman-color"
 alias gr="gvim --remote-silent"
 alias vr="vim --remote-silent"
+
+#------------------------------
+# ShellFuncs
+#------------------------------
+# -- coloured manuals
+man() {
+	env \
+		LESS_TERMCAP_mb=$(printf "\e[1;31m") \
+		LESS_TERMCAP_md=$(printf "\e[1;31m") \
+		LESS_TERMCAP_me=$(printf "\e[0m") \
+		LESS_TERMCAP_se=$(printf "\e[0m") \
+		LESS_TERMCAP_so=$(printf "\e[1;44;33m") \
+		LESS_TERMCAP_ue=$(printf "\e[0m") \
+		LESS_TERMCAP_us=$(printf "\e[1;32m") \
+		man "$@"
+}
+
 #------------------------------
 # Comp stuff
 #------------------------------
@@ -92,11 +109,15 @@ compdef _pacman pacman-color=pacman
 #------------------------------
 case $TERM in
     termite|*xterm*|rxvt|rxvt-unicode|rxvt-256color|rxvt-unicode-256color|(dt|k|E)term)
-		precmd () { print -Pn "\e]0;[%n@%M][%~]%#\a" } 
+		precmd () {
+			vcs_info
+			print -Pn "\e]0;[%n@%M][%~]%#\a"
+		} 
 		preexec () { print -Pn "\e]0;[%n@%M][%~]%# ($1)\a" }
 	;;
     screen|screen-256color)
     	precmd () { 
+			vcs_info
 			print -Pn "\e]83;title \"$1\"\a" 
 			print -Pn "\e]0;$TERM - (%L) [%n@%M]%# [%~]\a" 
 		}
@@ -110,10 +131,16 @@ esac
 #------------------------------
 # Prompt
 #------------------------------
-setprompt () {
+autoload -U colors zsh/terminfo
+colors
+
+autoload -Uz vcs_info
+zstyle ':vcs_info:*' enable git hg
+zstyle ':vcs_info:*' check-for-changes true
+zstyle ':vcs_info:git*' formats "%{${fg[cyan]}%}[%{${fg[green]}%}%s%{${fg[cyan]}%}][%{${fg[blue]}%}%r/%S%%{${fg[cyan]}%}][%{${fg[blue]}%}%b%{${fg[yellow]}%}%m%u%c%{${fg[cyan]}%}]%{$reset_color%}"
+
+setprompt() {
 	# load some modules
-	autoload -U colors zsh/terminfo # Used in the colour alias below
-	colors
 	setopt prompt_subst
 
 	# make some aliases for the colours: (coud use normal escap.seq's too)
@@ -140,6 +167,8 @@ setprompt () {
 	# set the prompt
 	PS1=$'${PR_CYAN}[${PR_USER}${PR_CYAN}@${PR_HOST}${PR_CYAN}][${PR_BLUE}%~${PR_CYAN}]${PR_USER_OP} '
 	PS2=$'%_>'
+	RPROMPT=$'${vcs_info_msg_0_}'
 }
 setprompt
 
+# vim: set ts=2 sw=2 et:
