@@ -22,6 +22,7 @@ import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.UrgencyHook
 import XMonad.Hooks.InsertPosition
+import XMonad.Hooks.EwmhDesktops
 
 -- layouts
 import XMonad.Layout.NoBorders
@@ -51,6 +52,7 @@ myConfig = defaultConfig { workspaces = workspaces'
                          , keys = keys'
                          , layoutHook = layoutHook'
                          , manageHook = manageHook'
+			 , handleEventHook = fullscreenEventHook
                          }
 
 -------------------------------------------------------------------------------
@@ -58,6 +60,7 @@ myConfig = defaultConfig { workspaces = workspaces'
 manageHook' = composeAll [ isFullscreen             --> doFullFloat
                          , className =? "MPlayer"   --> doFloat
                          , className =? "mplayer2"  --> doFloat
+			 , className =? "mpv"       --> doFloat
                          , className =? "Gimp"      --> doFloat
                          , className =? "Vlc"       --> doFloat
 			 , insertPosition Below Newer
@@ -83,7 +86,7 @@ myGSConfig = defaultGSConfig { gs_cellwidth = 160 }
 urgentConfig = UrgencyConfig { suppressWhen = Focused, remindWhen = Dont }
 
 -- borders
-borderWidth' = 1
+borderWidth' = 2
 normalBorderColor'  = "#333333"
 focusedBorderColor' = "#AFAF87"
 
