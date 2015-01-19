@@ -11,6 +11,7 @@ Plug 'tpope/vim-unimpaired'
 Plug 'scrooloose/syntastic'
 Plug 'majutsushi/tagbar'
 call plug#end()
+
 " -[ Plugin configurations ] -
 " jedi
 let g:jedi#popup_on_dot = 0
@@ -44,11 +45,8 @@ set showcmd
 set showmode
 set number
 set colorcolumn=80
-colorscheme candycode
-
-" statusline
-"set statusline=%<%f\ %{fugitive#statusline()}\ %y%h%m%r\ PWD:%{getcwd()}%=%-14.(%l,%c%V%)\ %P
 set laststatus=2
+colorscheme candycode
 
 " -[ FileTypes ]-
 " mail
@@ -58,7 +56,6 @@ autocmd FileType mail,human set formatoptions+=t textwidth=72
 autocmd FileType python let python_highlight_all = 1
 autocmd FileType python let python_slow_sync = 1
 autocmd FileType python set expandtab shiftwidth=4 softtabstop=4 
-"autocmd FileType python set completeopt=preview
 
 " PKGBUILD stuff
 autocmd FileType PKGBUILD set expandtab shiftwidth=2 softtabstop=4 
