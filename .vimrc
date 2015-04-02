@@ -10,6 +10,10 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-unimpaired'
 Plug 'scrooloose/syntastic'
 Plug 'majutsushi/tagbar'
+Plug 'SirVer/ultisnips'
+Plug 'Rykka/riv.vim'
+Plug 'nathanaelkane/vim-indent-guides'
+Plug 'lukerandall/haskellmode-vim'
 call plug#end()
 
 " -[ Plugin configurations ] -
@@ -25,6 +29,13 @@ let g:syntastic_mode_map = {
     \ "mode": "passive",
     \ "active_filetypes": [],
     \ "passive_filetypes": [] }
+
+" vim-indent-guides
+let g:indent_guides_start_level=2
+let g:indent_guides_guide_size=1
+" Shows indent level while typing
+set list listchars=tab:»-,trail:·,extends:»,precedes:«
+
 
 " -[ Various stuff ]-
 set nowrap
