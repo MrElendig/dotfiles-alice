@@ -4,6 +4,15 @@
 # Author:   Øyvind "Mr.Elendig" Heggstad <mrelendig@har-ikkje.net> #
 #------------------------------------------------------------------#
 
+#-----------------------------
+# Source some stuff
+#-----------------------------
+[[ -f ~/.zshrc-envoy ]] && . ~/.zshrc-envoy
+
+if [[ -f /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]]; then
+  . /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+fi
+
 #------------------------------
 # History stuff
 #------------------------------
@@ -14,10 +23,10 @@ SAVEHIST=1000
 #------------------------------
 # Variables
 #------------------------------
-export BROWSER="firefox"
+export BROWSER="chromium"
 export EDITOR="vim"
-#export PAGER="vimpager"
 export PATH="${PATH}:${HOME}/bin:${HOME}/.cabal/bin"
+export GOPATH="$HOME/go"
 
 #-----------------------------
 # Dircolors
@@ -140,35 +149,30 @@ zstyle ':vcs_info:*' check-for-changes true
 zstyle ':vcs_info:git*' formats "%{${fg[cyan]}%}[%{${fg[green]}%}%s%{${fg[cyan]}%}][%{${fg[blue]}%}%r/%S%%{${fg[cyan]}%}][%{${fg[blue]}%}%b%{${fg[yellow]}%}%m%u%c%{${fg[cyan]}%}]%{$reset_color%}"
 
 setprompt() {
-  # load some modules
   setopt prompt_subst
 
-  # make some aliases for the colours: (coud use normal escap.seq's too)
-  for color in RED GREEN YELLOW BLUE MAGENTA CYAN WHITE; do
-    eval PR_$color='%{$fg[${(L)color}]%}'
-  done
-  PR_NO_COLOR="%{$terminfo[sgr0]%}"
-
-  # Check the UID
-  if [[ $UID -ge 1000 ]]; then # normal user
-    eval PR_USER='${PR_GREEN}%n${PR_NO_COLOR}'
-    eval PR_USER_OP='${PR_GREEN}%#${PR_NO_COLOR}'
-  elif [[ $UID -eq 0 ]]; then # root
-    eval PR_USER='${PR_RED}%n${PR_NO_COLOR}'
-    eval PR_USER_OP='${PR_RED}%#${PR_NO_COLOR}'
-  fi
-
-  # Check if we are on SSH or not
   if [[ -n "$SSH_CLIENT"  ||  -n "$SSH2_CLIENT" ]]; then 
-    eval PR_HOST='${PR_YELLOW}%M${PR_NO_COLOR}' #SSH
-  else 
-    eval PR_HOST='${PR_GREEN}%M${PR_NO_COLOR}' # no SSH
+    p_host='%F{yellow}%M%f'
+  else
+    p_host='%F{green}%M%f'
   fi
-  # set the prompt
-  PS1=$'${PR_CYAN}[${PR_USER}${PR_CYAN}@${PR_HOST}${PR_CYAN}][${PR_BLUE}%~${PR_CYAN}]${PR_USER_OP} '
+
+  PS1=${(j::Q)${(Z:Cn:):-$'
+    %F{cyan}[%f
+    %(!.%F{red}%n%f.%F{green}%n%f)
+    %F{cyan}@%f
+    ${p_host}
+    %F{cyan}][%f
+    %F{blue}%~%f
+    %F{cyan}]%f
+    %(!.%F{red}%#%f.%F{green}%#%f)
+    " "
+  '}}
+
   PS2=$'%_>'
   RPROMPT=$'${vcs_info_msg_0_}'
 }
 setprompt
+
 
 # vim: set ts=2 sw=2 et:
