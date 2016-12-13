@@ -7,11 +7,12 @@
 #-----------------------------
 # Source some stuff
 #-----------------------------
-[[ -f ~/.zshrc-envoy ]] && . ~/.zshrc-envoy
-
 if [[ -f /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]]; then
   . /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
+
+BASE16_SHELL="$HOME/.config/base16-shell/base16-default.dark.sh"
+[[ -s $BASE16_SHELL ]] && source $BASE16_SHELL
 
 #------------------------------
 # History stuff
@@ -24,7 +25,7 @@ SAVEHIST=1000
 # Variables
 #------------------------------
 export BROWSER="chromium"
-export EDITOR="vim"
+export EDITOR="nvim"
 export PATH="${PATH}:${HOME}/bin:${HOME}/.cabal/bin"
 export GOPATH="$HOME/go"
 
@@ -66,7 +67,6 @@ bindkey "\eOF" end-of-line
 alias ls="ls --color -F"
 alias ll="ls --color -lh"
 alias spm="sudo pacman"
-alias spmc="sudo pacman-color"
 alias gr="gvim --remote-silent"
 alias vr="vim --remote-silent"
 
@@ -109,9 +109,6 @@ zstyle ':completion:*:kill:*'   force-list always
 
 zstyle ':completion:*:*:killall:*' menu yes select
 zstyle ':completion:*:killall:*'   force-list always
-
-#- complete pacman-color the same as pacman
-compdef _pacman pacman-color=pacman
 
 #------------------------------
 # Window title
